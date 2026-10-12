@@ -28,6 +28,7 @@ const ACCESS_DIGEST = 'a78f19952edd18bf02b3c9eb704b088e2120941d6acb22f6f795c4279
 
 const euroNumber = new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 0, maximumFractionDigits: 2 })
 const dongNumber = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 })
+const scaleNumber = new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 0, maximumFractionDigits: 2 })
 
 function parseInput(raw: string) {
   const normalized = raw.replace(/\s/g, '').replace(',', '.').replace(/[^0-9.]/g, '')
@@ -35,7 +36,21 @@ function parseInput(raw: string) {
 }
 
 function formatEuros(value: number) { return `${euroNumber.format(value)} €` }
-function formatDongs(value: number) { return `${dongNumber.format(Math.round(value))} dongs` }
+function formatDongs(value: number) { return `${dongNumber.format(Math.round(value))} dôngs` }
+
+function describeDongs(value: number) {
+  const rounded = Math.abs(Math.round(value))
+  if (rounded >= 1_000_000_000) {
+    const scaled = rounded / 1_000_000_000
+    return `${scaleNumber.format(scaled)} ${scaled < 2 ? 'milliard' : 'milliards'} de dôngs`
+  }
+  if (rounded >= 1_000_000) {
+    const scaled = rounded / 1_000_000
+    return `${scaleNumber.format(scaled)} ${scaled < 2 ? 'million' : 'millions'} de dôngs`
+  }
+  if (rounded >= 1_000) return `${scaleNumber.format(rounded / 1_000)} mille dôngs`
+  return `${dongNumber.format(rounded)} dôngs`
+}
 
 async function sha256(value: string) {
   const bytes = new TextEncoder().encode(value)
@@ -130,7 +145,7 @@ function App() {
         <div className="mb-5 max-w-3xl">
           <div className="eyebrow"><Sparkles size={13} /> Taux libre, conversion instantanée</div>
           <h1 className="mt-3 text-3xl font-semibold leading-tight tracking-[-0.045em] sm:text-4xl">
-            Convertisseur <span className="text-gradient">€ ↔ dongs</span>
+            Convertisseur <span className="text-gradient">€ ↔ dôngs</span>
           </h1>
           <p className="mt-2 max-w-xl text-sm leading-6 text-slate-600">
             Saisissez un montant. Le résultat est immédiat, avec votre propre taux.
@@ -145,7 +160,7 @@ function App() {
                 <h2 className="mt-1 text-2xl font-semibold tracking-tight">Combien cela fait ?</h2>
               </div>
               <button className="rate-chip" onClick={() => setSettingsOpen(true)}>
-                <RefreshCw size={13} /> 1 € = {rate.toLocaleString('fr-FR')} dongs
+                <RefreshCw size={13} /> 1 € = {rate.toLocaleString('fr-FR')} dôngs
               </button>
             </div>
 
@@ -159,8 +174,9 @@ function App() {
                     onChange={(event) => setAmount(event.target.value)}
                     aria-label="Montant à convertir"
                   />
-                  <b>{direction === 'EUR_VND' ? '€' : 'dongs'}</b>
+                  <b>{direction === 'EUR_VND' ? '€' : 'dôngs'}</b>
                 </div>
+                {direction === 'VND_EUR' && <small className="dong-reading">En clair : {describeDongs(numericAmount)}</small>}
               </label>
 
               <button className="swap-button" onClick={switchDirection} aria-label="Inverser les devises">
@@ -171,8 +187,9 @@ function App() {
                 <span>Vous obtenez</span>
                 <div className="flex min-w-0 items-end gap-3">
                   <output title={formattedResult}>{formattedResult.replace(/\s/g, ' ')}</output>
-                  <b>{direction === 'EUR_VND' ? 'dongs' : '€'}</b>
+                  <b>{direction === 'EUR_VND' ? 'dôngs' : '€'}</b>
                 </div>
+                {direction === 'EUR_VND' && <small className="dong-reading">En clair : {describeDongs(result)}</small>}
               </div>
             </div>
 
@@ -188,7 +205,7 @@ function App() {
                 <p className="section-kicker">Repères express</p>
                 <h2 className="mt-1 text-2xl font-semibold tracking-tight">Les montants utiles</h2>
               </div>
-              <span className="flag-badge">€ <ArrowRight size={12} /> dongs</span>
+              <span className="flag-badge">€ <ArrowRight size={12} /> dôngs</span>
             </div>
             <div className="mt-6 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
               {COMMON_EUR.map((value) => (
@@ -202,6 +219,7 @@ function App() {
                 >
                   <span>{formatEuros(value)}</span>
                   <strong>{formatDongs(value * rate)}</strong>
+                  <small>{describeDongs(value * rate)}</small>
                   <ChevronRight size={15} />
                 </button>
               ))}
@@ -237,12 +255,12 @@ function App() {
             <div className="modal-icon"><RefreshCw size={22} /></div>
             <p className="section-kicker">Réglage personnel</p>
             <h2 id="rate-title" className="mt-2 text-3xl font-semibold tracking-tight">Votre taux de change</h2>
-            <p className="mt-3 text-sm leading-6 text-slate-500">Indiquez combien de dongs valent un euro. Ce taux sera mémorisé sur cet appareil.</p>
+            <p className="mt-3 text-sm leading-6 text-slate-500">Indiquez combien de dôngs valent un euro. Ce taux sera mémorisé sur cet appareil.</p>
             <label className="mt-6 block">
               <span className="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500">1 EUR équivaut à</span>
               <div className="rate-input-wrap">
                 <input inputMode="numeric" value={rateDraft} onChange={(event) => setRateDraft(event.target.value)} />
-                <span>dongs</span>
+                <span>dôngs</span>
               </div>
             </label>
             <button className="primary-button mt-4 w-full justify-center" onClick={saveRate}>

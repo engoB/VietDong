@@ -1,6 +1,6 @@
 # Euro Dong
 
-PWA de conversion euros ↔ dongs, pensée pour le mobile et compatible avec GitHub Pages.
+PWA de conversion euros ↔ dôngs, pensée pour le mobile et compatible avec GitHub Pages.
 
 ## Développement
 

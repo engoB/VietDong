@@ -48,19 +48,22 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid 
 .money-field > span { display: block; margin-bottom: .6rem; color: #91a0b3; font-size: .68rem; text-transform: uppercase; letter-spacing: .12em; font-weight: 800; }
 .money-field input, .money-field output { width: 100%; min-width: 0; border: 0; outline: 0; background: transparent; color: white; font-size: clamp(2rem, 8vw, 3.2rem); line-height: 1; font-weight: 650; letter-spacing: -.05em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .money-field b { flex: none; color: #c7f36b; font-size: .82rem; letter-spacing: .08em; }
+.money-field .dong-reading { display: block; margin: .65rem 0 0; color: #bdcaab; font-size: .72rem; font-weight: 700; letter-spacing: 0; text-transform: none; }
 .result-field { background: #f8f6ef; color: #0a1628; }
 .result-field output { color: #0a1628; font-size: clamp(1.65rem, 5vw, 2.8rem); overflow: visible; text-overflow: clip; }
 .result-field > span { color: #77808c; }
 .result-field b { color: #56792d; }
+.result-field .dong-reading { color: #6c775f; }
 .swap-button { position: absolute; z-index: 2; right: 1.2rem; top: calc(50% - 1.45rem); width: 2.9rem; height: 2.9rem; display: grid; place-items: center; border: 4px solid #0a1628; border-radius: 50%; background: #c7f36b; color: #0a1628; cursor: pointer; transition: transform .25s ease; }
 .swap-button:hover { transform: rotate(180deg); }
 .text-link { display: inline-flex; align-items: center; gap: .35rem; color: #c7f36b; background: transparent; border: 0; cursor: pointer; font-weight: 700; }
 
 .flag-badge, .secure-tag { display: inline-flex; align-items: center; gap: .35rem; border-radius: 999px; background: #eef7da; color: #4d6d26; padding: .42rem .6rem; font-size: .65rem; font-weight: 800; }
-.quick-tile { position: relative; min-height: 5rem; padding: .85rem 2rem .85rem .9rem; text-align: left; border: 1px solid rgba(10,22,40,.08); border-radius: .95rem; background: rgba(244,241,232,.6); cursor: pointer; transition: .18s ease; }
+.quick-tile { position: relative; min-height: 6rem; padding: .85rem 2rem .85rem .9rem; text-align: left; border: 1px solid rgba(10,22,40,.08); border-radius: .95rem; background: rgba(244,241,232,.6); cursor: pointer; transition: .18s ease; }
 .quick-tile:hover { transform: translateY(-2px); background: white; box-shadow: 0 9px 24px rgba(10,22,40,.08); }
 .quick-tile span { display: block; color: #6c7581; font-size: .71rem; font-weight: 700; }
 .quick-tile strong { display: block; margin-top: .18rem; font-size: .86rem; letter-spacing: -.02em; white-space: nowrap; }
+.quick-tile small { display: block; margin-top: .28rem; color: #6a7d4f; font-size: .66rem; font-weight: 700; }
 .quick-tile svg { position: absolute; right: .75rem; top: 50%; transform: translateY(-50%); color: #7ea540; }
 
 .vault-banner { display: flex; align-items: center; gap: 1rem; padding: 1.05rem 1.25rem; border-radius: 1.25rem; background: rgba(255,255,255,.58); border: 1px solid rgba(10,22,40,.08); box-shadow: 0 14px 44px rgba(6,16,29,.06); }

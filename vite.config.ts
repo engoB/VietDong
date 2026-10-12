@@ -13,9 +13,9 @@ export default defineConfig({
       filename: 'sw.js',
       includeAssets: ['icons/pwa-192x192.png', 'icons/pwa-512x512.png'],
       manifest: {
-        name: 'Euro Dong — Convertisseur euros / dongs',
+        name: 'Euro Dong — Convertisseur euros / dôngs',
         short_name: 'Euro Dong',
-        description: 'Conversion euros / dongs avec taux personnalisable.',
+        description: 'Conversion euros / dôngs avec taux personnalisable.',
         theme_color: '#0a1628',
         background_color: '#f4f1e8',
         display: 'standalone',
